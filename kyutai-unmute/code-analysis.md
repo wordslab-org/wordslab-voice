@@ -2,6 +2,28 @@ The `main_websocket.py` file implements a **FastAPI-based WebSocket server** tha
 
 ---
 
+Most important section of code in this file to scale the service:
+
+```python
+# We prefer to scale this by running more instances of the server than having a single
+# server handle more. This is to avoid the GIL.
+MAX_CLIENTS = 4
+SEMAPHORE = asyncio.Semaphore(MAX_CLIENTS)
+```
+
+Number of replicas in the refrence swarm-deploy.yaml
+- frontend: 5
+- backend: 16 (cpus: "1.5", memory: 1G)
+- stt: 1 (cpus: "8", memory: 16G, kind: gpu value: 1)
+  - batch_size = 64  (stt-prod.toml)
+- tts: 3 (cpus: "8", memory: 16G, kind: gpu value: 1)
+  - batch_size = 4  (tts-prod.toml)
+
+64 clients
+- 16 backend x 4 max clients
+- 1 x 64 batch size pour STT
+- 3 x 4 batch size pour TTS (6x real time generation ?)
+  
 ### 🧠 High-Level Overview
 
 This server serves real-time voice conversations between a user and an AI model:
