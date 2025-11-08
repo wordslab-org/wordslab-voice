@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Configure the services for parallel conversations
+# [OPTIONAL] Configure the services for parallel conversations
 # Max 4 workers for a single backend container
 
-cd unmute
+cd ./unmute
 vi services/moshi-server/configs/stt.toml 
 # batch_size = 1          <--- make this bigger to support more parallel conversations
 # batch_size = 4
@@ -15,7 +15,7 @@ docker compose down
 docker compose build
 docker compose up
 
-# Restart the service without SSL certificates
+# [OPTIONAL] Restart the service without SSL certificates
 
 cd unmute
 vi docker-compose.yml
@@ -27,6 +27,6 @@ vi docker-compose.yml
 docker compose down
 docker compose up
 
-# wait until the services are ready
+# [LOAD TEST] wait until the services are ready
 
 uv run unmute/loadtest/loadtest_client.py --server-url ws://localhost:8883/api --n-workers 4 --n-conversations 12

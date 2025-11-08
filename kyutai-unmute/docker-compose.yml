@@ -15,7 +15,7 @@ services:
       - "--providers.file.directory=/dynamic"
 
     ports:
-      # Expose HTTPS port on host as 8883
+      # Expose HTTPS on host port 8883
       - "${USER_APP1_PORT}:443"
     
     volumes:

@@ -2,12 +2,11 @@
 
 # ollama llm warm up
 
-# stt        # Needs 2.5GB of vram
-# tts        # Needs 5.3GB of vram
-# llm        # Needs 11GB of vram for gemma3:12b 
+# stt        # Needs 2.5 GB of vram
+# tts        # Needs 5.3 GB of vram
+# llm        # Needs 11  GB of vram for gemma3:12b 
 
 # VRAM used: 21078MiB /  24564MiB
-
 
 ollama run gemma3:12b hello --verbose
 
